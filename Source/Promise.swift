@@ -27,15 +27,7 @@ public class Promise<T: Any> {
 		let queue = NSOperationQueue()
 
 		for operation in operations {
-			operation.catchError = { error in
-				queue.cancelAllOperations()
-
-				if let done = block {
-					dispatch_async(dispatch_get_main_queue(), {
-						done(nil, error)
-					})
-				}
-			}
+			operation.catchError = getCatchError(queue, block: block)
 		}
 
 		if let done = block {
@@ -80,6 +72,21 @@ public class Promise<T: Any> {
 		}
 
 		operations.append(operation)
+	}
+
+	func getCatchError(
+			queue: NSOperationQueue, block: ((T?, NSError?) -> ())?)
+		-> ((NSError) -> ()) {
+
+		return { error in
+			queue.cancelAllOperations()
+
+			if let done = block {
+				dispatch_async(dispatch_get_main_queue(), {
+					done(nil, error)
+				})
+			}
+		}
 	}
 
 }
