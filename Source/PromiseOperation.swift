@@ -25,7 +25,7 @@ class PromiseOperation : Operation {
 			self.output = $0
 			dispatch_group_leave(group)
 		}, {
-			self.`catch`?($0)
+			self.catchError?($0)
 			dispatch_group_leave(group)
 		})
 

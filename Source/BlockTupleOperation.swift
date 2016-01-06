@@ -13,7 +13,7 @@ class BlockTupleOperation : Operation {
 		let output = block(operation?.output)
 
 		if let error = output.1 {
-			`catch`?(error)
+			catchError?(error)
 		}
 		else {
 			self.output = output.0
