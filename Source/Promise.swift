@@ -5,13 +5,13 @@ public class Promise<T: Any> {
 	var operations = [Operation]()
 	var promise: (((Any?) -> (), (NSError) -> ()) -> ())?
 
-	init(_ block: () -> (T)) {
+	public init(_ block: () -> (T)) {
 		addDependency(BlockOperation { input in
 			return block()
 		})
 	}
 
-	init(promise: ((T) -> (), (NSError) -> ()) -> ()) {
+	public init(promise: ((T) -> (), (NSError) -> ()) -> ()) {
 		self.promise = { fulfill, reject in
 			promise({ fulfill($0) }, reject)
 		}

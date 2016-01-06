@@ -1,6 +1,6 @@
 extension Promise {
 
-	 func all(block: (T) -> (Any?)...) -> Promise<[Any?]> {
+	 public func all(block: (T) -> (Any?)...) -> Promise<[Any?]> {
 		var blocks: [Any? -> Any?] = []
 
 		for b in block {

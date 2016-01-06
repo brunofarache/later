@@ -1,5 +1,5 @@
 import XCTest
-@testable import later
+import later
 
 class ThenTest : XCTestCase {
 
