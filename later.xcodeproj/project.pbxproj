@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC0C23471C3D6DFD00408177 /* later.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0C233D1C3D6DFD00408177 /* later.framework */; settings = {ASSET_TAGS = (); }; };
-		CC0C23571C3D6E2000408177 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886DA1C3C734C000C0DD7 /* Promise.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C23581C3D6E2000408177 /* PromiseAllExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886DB1C3C734C000C0DD7 /* PromiseAllExtension.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C235C1C3D6E3000408177 /* AllTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E41C3C7354000C0DD7 /* AllTest.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C235D1C3D6E3000408177 /* CatchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E51C3C7354000C0DD7 /* CatchTest.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C235E1C3D6E3000408177 /* FulfillTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E61C3C7354000C0DD7 /* FulfillTest.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C23601C3D6E3000408177 /* ThenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E81C3C7354000C0DD7 /* ThenTest.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C23621C3D6E3000408177 /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0631621AEB17530097D129 /* XCTestCaseExtension.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C236B1C3D8B5B00408177 /* AllOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23661C3D8B5B00408177 /* AllOperation.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C236C1C3D8B5B00408177 /* BlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23671C3D8B5B00408177 /* BlockOperation.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C236D1C3D8B5B00408177 /* BlockTupleOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23681C3D8B5B00408177 /* BlockTupleOperation.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C236E1C3D8B5B00408177 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23691C3D8B5B00408177 /* Operation.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C236F1C3D8B5B00408177 /* PromiseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C236A1C3D8B5B00408177 /* PromiseOperation.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C23751C3D8BC500408177 /* PromiseOperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23721C3D8BAB00408177 /* PromiseOperationTest.swift */; settings = {ASSET_TAGS = (); }; };
-		CC0C23761C3D8BC800408177 /* AllOperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23711C3D8BAB00408177 /* AllOperationTest.swift */; settings = {ASSET_TAGS = (); }; };
+		CC0C23471C3D6DFD00408177 /* later.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC0C233D1C3D6DFD00408177 /* later.framework */; };
+		CC0C23571C3D6E2000408177 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886DA1C3C734C000C0DD7 /* Promise.swift */; };
+		CC0C23581C3D6E2000408177 /* PromiseAllExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886DB1C3C734C000C0DD7 /* PromiseAllExtension.swift */; };
+		CC0C235C1C3D6E3000408177 /* AllTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E41C3C7354000C0DD7 /* AllTest.swift */; };
+		CC0C235D1C3D6E3000408177 /* CatchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E51C3C7354000C0DD7 /* CatchTest.swift */; };
+		CC0C235E1C3D6E3000408177 /* FulfillTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E61C3C7354000C0DD7 /* FulfillTest.swift */; };
+		CC0C23601C3D6E3000408177 /* ThenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA886E81C3C7354000C0DD7 /* ThenTest.swift */; };
+		CC0C23621C3D6E3000408177 /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0631621AEB17530097D129 /* XCTestCaseExtension.swift */; };
+		CC0C236B1C3D8B5B00408177 /* AllOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23661C3D8B5B00408177 /* AllOperation.swift */; };
+		CC0C236C1C3D8B5B00408177 /* BlockOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23671C3D8B5B00408177 /* BlockOperation.swift */; };
+		CC0C236D1C3D8B5B00408177 /* BlockTupleOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23681C3D8B5B00408177 /* BlockTupleOperation.swift */; };
+		CC0C236E1C3D8B5B00408177 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23691C3D8B5B00408177 /* Operation.swift */; };
+		CC0C236F1C3D8B5B00408177 /* PromiseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C236A1C3D8B5B00408177 /* PromiseOperation.swift */; };
+		CC0C23751C3D8BC500408177 /* PromiseOperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23721C3D8BAB00408177 /* PromiseOperationTest.swift */; };
+		CC0C23761C3D8BC800408177 /* AllOperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C23711C3D8BAB00408177 /* AllOperationTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -433,6 +433,7 @@
 				CC0C23501C3D6DFD00408177 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC0C23511C3D6DFD00408177 /* Build configuration list for PBXNativeTarget "tests" */ = {
 			isa = XCConfigurationList;
@@ -441,6 +442,7 @@
 				CC0C23531C3D6DFD00408177 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC6004E71ADEC22200B8F2E5 /* Build configuration list for PBXProject "later" */ = {
 			isa = XCConfigurationList;
