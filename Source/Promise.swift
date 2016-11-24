@@ -1,6 +1,6 @@
 import Foundation
 
-public class Promise<T: Any> {
+public class Promise<T> {
 
 	var operations = [Operation]()
 
@@ -8,16 +8,19 @@ public class Promise<T: Any> {
 	public typealias Fulfill = (T?) -> ()
 
 	var promise: ((Fulfill, Reject) -> Void)?
+
+	public init(_ block: @escaping () -> (T)) {
+		addDependency(operation: BlockOperation { input in
 			return block()
 		})
 	}
 
-	public init(promise: ((T) -> (), (NSError) -> ()) -> ()) {
-		self.promise = { fulfill, reject in
+	public init(promise: @escaping (Fulfill, Reject) -> Void) {
+		self.promise = {  fulfill, reject in
 			promise({ fulfill($0) }, reject)
 		}
 
-		addDependency(PromiseOperation(promise: self.promise!))
+		addDependency(operation: PromiseOperation(promise: self.promise!))
 	}
 
 	init(_ operations: [Operation]) {
@@ -25,33 +28,33 @@ public class Promise<T: Any> {
 	}
 
 	public func done(block: ((T?, NSError?) -> ())? = nil) {
-		let queue = NSOperationQueue()
+		let queue = OperationQueue()
 
 		for operation in operations {
-			operation.catchError = getCatchError(queue, block: block)
+			operation.catchError = getCatchError(queue: queue, block: block)
 		}
 
 		if let done = block {
-			addDependency(BlockOperation({ input in
-				dispatch_async(dispatch_get_main_queue(), {
+			addDependency(operation: BlockOperation({ input in
+				DispatchQueue.main.async {
 					done(input as! T?, nil)
-				})
+				}
 			}))
 		}
 
 		queue.addOperations(operations, waitUntilFinished: false)
 	}
 
-	public func then<U: Any>(block: (T) -> (U)) -> Promise<U> {
-		addDependency(BlockOperation { input in
+	public func then<U: Any>(block: @escaping (T) -> (U)) -> Promise<U> {
+		addDependency(operation: BlockOperation { input in
 			return block(input as! T) as U
 		})
 
 		return Promise<U>(self.operations)
 	}
 
-	public func then<U: Any>(block: (T) -> (U, NSError?)) -> Promise<U> {
-		addDependency(BlockTupleOperation { input in
+	public func then<U: Any>(block: @escaping (T) -> (U, NSError?)) -> Promise<U> {
+		addDependency(operation: BlockTupleOperation { input in
 			let output = block(input as! T)
 			return (output.0, output.1)
 		})
@@ -59,8 +62,8 @@ public class Promise<T: Any> {
 		return Promise<U>(self.operations)
 	}
 
-	public func then<U: Any>(block: (T) -> (Promise<U>)) -> Promise<U> {
-		addDependency(PromiseOperation(block: { input in
+	public func then<U: Any>(block: @escaping (T) -> (Promise<U>)) -> Promise<U> {
+		addDependency(operation: PromiseOperation(block: { input in
 			return block(input as! T).promise!
 		}))
 
@@ -76,16 +79,16 @@ public class Promise<T: Any> {
 	}
 
 	func getCatchError(
-			queue: NSOperationQueue, block: ((T?, NSError?) -> ())?)
+			queue: OperationQueue, block: ((T?, NSError?) -> ())?)
 		-> ((NSError) -> ()) {
 
 		return { error in
 			queue.cancelAllOperations()
 
 			if let done = block {
-				dispatch_async(dispatch_get_main_queue(), {
+				DispatchQueue.main.async {
 					done(nil, error)
-				})
+				}
 			}
 		}
 	}
