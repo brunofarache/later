@@ -3,17 +3,15 @@ import later
 
 class Fulfill : XCTestCase {
 
+
+
 	func testFulfill() {
-		let expectation = expect("testFulfill")
+		let expectation = expect(description: "testFulfill")
 		var output = [String]()
 
 		Promise<String>(promise: { fulfill, reject in
-			let queue = dispatch_get_global_queue(
-				DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-			dispatch_async(queue, {
-				fulfill("one")
-			})
+			fulfill("one")
 		})
 		.then { value -> String in
 			output.append(value)

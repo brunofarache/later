@@ -4,8 +4,8 @@ import XCTest
 class PromiseOperationTest : XCTestCase {
 
 	func testFulfill() {
-		let expectation = expect("testFulfill")
-		let queue = NSOperationQueue()
+		let expectation = expect(description: "testFulfill")
+		let queue = OperationQueue()
 
 		let operation = PromiseOperation { fulfill, reject in
 			fulfill("one")
@@ -24,8 +24,8 @@ class PromiseOperationTest : XCTestCase {
 	}
 
 	func testReject() {
-		let expectation = expect("testReject")
-		let queue = NSOperationQueue()
+		let expectation = expect(description: "testReject")
+		let queue = OperationQueue()
 		var error: NSError?
 
 		let operation = PromiseOperation { fulfill, reject in

@@ -4,7 +4,7 @@ import later
 class AllTest : XCTestCase {
 
 	func testAll() {
-		let expectation = expect("testAll")
+		let expectation = expect(description: "testAll")
 		var output = [Any?]()
 
 		let p = Promise {

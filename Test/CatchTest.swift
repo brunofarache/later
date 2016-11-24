@@ -4,15 +4,15 @@ import later
 class CatchTest : XCTestCase {
 
 	func testBlock_Returns_Error() {
-		let expectation = expect("testBlock_Returns_Error")
+		let expectation = expect(description: "testBlock_Returns_Error")
 		var e: NSError?
 
 		let p = Promise {
 			return "one"
 		}
-		.then({ value -> (String, NSError?) in
+		.then { value -> (String, NSError?) in
 			return (value, self._createError())
-		})
+		}
 
 		p.done { value, error in
 			e = error
@@ -27,16 +27,11 @@ class CatchTest : XCTestCase {
 	}
 
 	func testPromise_Returns_Error() {
-		let expectation = expect("testPromise_Returns_Error")
+		let expectation = expect(description: "testPromise_Returns_Error")
 		var e: NSError?
 
 		let p = Promise<()>(promise: { fulfill, reject in
-			let queue = dispatch_get_global_queue(
-				DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-			dispatch_async(queue, {
-				reject(self._createError())
-			})
+			reject(self._createError())
 		})
 
 		p.done { value, error in
@@ -51,17 +46,14 @@ class CatchTest : XCTestCase {
 	}
 
 	func testError_Fall_Through() {
-		let expectation = expect("testError_Fall_Through")
+		let expectation = expect(description: "testError_Fall_Through")
 		var e: NSError?
 
 		let p = Promise<()>(promise: { fulfill, reject in
-			let queue = dispatch_get_global_queue(
-				DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-			dispatch_async(queue, {
 				sleep(1)
 				reject(self._createError())
-			})
+			
 		})
 		.then {
 			XCTFail(
@@ -73,7 +65,7 @@ class CatchTest : XCTestCase {
 			expectation.fulfill()
 		}
 
-		wait(1.5) {
+		wait(timeout: 1.5) {
 			XCTAssertEqual("domain", e!.domain)
 			XCTAssertEqual(1, e!.code)
 		}
@@ -82,5 +74,7 @@ class CatchTest : XCTestCase {
 	private func _createError() -> NSError {
 		return NSError(domain: "domain", code: 1, userInfo: nil)
 	}
+
+	
 
 }

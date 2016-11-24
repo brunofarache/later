@@ -3,10 +3,10 @@ import XCTest
 extension XCTestCase {
 
 	func expect(description: String!) -> XCTestExpectation {
-		return expectationWithDescription(description)
+		return expectation(description: description)
 	}
 
-	func fail(error: NSError?) {
+	func fail(error: Error?) {
 		if (error == nil) {
 			return
 		}
@@ -15,8 +15,8 @@ extension XCTestCase {
 	}
 
 	func wait(timeout: Double? = 1 , assert: (() -> ())? = nil) {
-		waitForExpectationsWithTimeout(timeout!) { error in
-			self.fail(error)
+		waitForExpectations(timeout: timeout!) { error in
+			self.fail(error: error)
 			assert?()
 		}
 	}

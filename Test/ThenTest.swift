@@ -4,7 +4,7 @@ import later
 class ThenTest : XCTestCase {
 
 	func testReturns_Array_Then_Empty() {
-		let expectation = expect("testReturns_Array_Then_Empty")
+		let expectation = expect(description: "testReturns_Array_Then_Empty")
 
 		let p = Promise {
 			return "one"
@@ -25,7 +25,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_Empty_Then_Empty() {
-		let expectation = expect("testReturns_Empty_Then_Empty")
+		let expectation = expect(description: "testReturns_Empty_Then_Empty")
 		var order = [String]()
 
 		let p = Promise {
@@ -50,7 +50,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_Empty_Then_String() {
-		let expectation = expect("testReturns_Empty_Then_String")
+		let expectation = expect(description: "testReturns_Empty_Then_String")
 		var output = [String]()
 
 		let p = Promise {
@@ -65,7 +65,7 @@ class ThenTest : XCTestCase {
 
 		p.done { value, error in
 			output.append(value!)
-			XCTAssertTrue(NSThread.isMainThread())
+			XCTAssertTrue(Thread.isMainThread)
 			expectation.fulfill()
 		}
 
@@ -77,7 +77,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_Promise() {
-		let expectation = expect("testReturns_Promise")
+		let expectation = expect(description: "testReturns_Promise")
 		var output = [String]()
 
 		let p = Promise {
@@ -87,12 +87,7 @@ class ThenTest : XCTestCase {
 			output.append(value)
 
 			return Promise<String>(promise: { fulfill, reject in
-				let queue = dispatch_get_global_queue(
-					DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-				dispatch_async(queue, {
-					fulfill("two")
-				})
+				fulfill("two")
 			})
 		}
 		.then { value -> () in
@@ -110,7 +105,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_String_Then_Empty() {
-		let expectation = expect("testReturns_String_Then_Empty")
+		let expectation = expect(description: "testReturns_String_Then_Empty")
 		var output = [String]()
 
 		let p = Promise {
@@ -135,7 +130,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_String_Then_String() {
-		let expectation = expect("testReturns_String_Then_String")
+		let expectation = expect(description: "testReturns_String_Then_String")
 		var output = [String]()
 
 		let p = Promise {
@@ -152,7 +147,7 @@ class ThenTest : XCTestCase {
 
 		p.done { value, error in
 			output.append(value!)
-			XCTAssertTrue(NSThread.isMainThread())
+			XCTAssertTrue(Thread.isMainThread)
 			expectation.fulfill()
 		}
 
@@ -165,7 +160,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_Tuple_Then_Empty() {
-		let expectation = expect("testReturns_Tuple_Then_Empty")
+		let expectation = expect(description: "testReturns_Tuple_Then_Empty")
 		var output = [String]()
 
 		let p = Promise {
@@ -192,7 +187,7 @@ class ThenTest : XCTestCase {
 	}
 
 	func testReturns_Tuple_Of_Strings_Then_Empty() {
-		let expectation = expect("testReturns_Tuple_Of_Strings_Then_Empty")
+		let expectation = expect(description: "testReturns_Tuple_Of_Strings_Then_Empty")
 		var output = [String]()
 
 		let p = Promise {
