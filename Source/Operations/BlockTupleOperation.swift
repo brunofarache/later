@@ -4,7 +4,7 @@ class BlockTupleOperation : Operation {
 
 	var block: (Any?) -> (Any?, NSError?)
 
-	init(_ block: (Any?) -> (Any?, NSError?)) {
+	init(_ block: @escaping (Any?) -> (Any?, NSError?)) {
 		self.block = block
 	}
 

@@ -4,7 +4,7 @@ class BlockOperation : Operation {
 
 	var block: ((Any?) -> (Any?))
 
-	init(_ block: (Any?) -> (Any?)) {
+	init(_ block: @escaping (Any?) -> (Any?)) {
 		self.block = block
 	}
 
