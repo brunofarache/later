@@ -5,31 +5,31 @@ class PromiseOperation : Operation {
 	var block: ((Any?) -> (((Any?) -> (), (NSError) -> ()) -> ()))?
 	var promise: (((Any?) -> (), (NSError) -> ()) -> ())?
 
-	init(promise: (((Any?) -> (), (NSError) -> ()) -> ())) {
+	init(promise: @escaping (((Any?) -> (), (NSError) -> ()) -> ())) {
 		self.promise = promise
 	}
 
-	init(block: (Any?) -> (((Any?) -> (), (NSError) -> ()) -> ())) {
+	init(block: @escaping (Any?) -> (((Any?) -> (), (NSError) -> ()) -> ())) {
 		self.block = block
 	}
 
 	override func main() {
-		let group = dispatch_group_create()
-		dispatch_group_enter(group)
+		let group = DispatchGroup()
+		group.enter()
 
-		if let b = block, op = dependencies.last as? Operation {
+		if let b = block, let op = dependencies.last as? Operation {
 			promise = b(op.output)
 		}
 
 		promise!({
 			self.output = $0
-			dispatch_group_leave(group)
+			group.leave()
 		}, {
 			self.catchError?($0)
-			dispatch_group_leave(group)
+			group.leave()
 		})
 
-		dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
+		group.wait()
 	}
 
 }
