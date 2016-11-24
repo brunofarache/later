@@ -1,6 +1,6 @@
 import Foundation
 
-class Operation : NSOperation {
+class Operation : Foundation.Operation {
 
 	var catchError: ((NSError) -> ())?
 	var output: Any?
