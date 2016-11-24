@@ -3,10 +3,11 @@ import Foundation
 public class Promise<T: Any> {
 
 	var operations = [Operation]()
-	var promise: (((Any?) -> (), (NSError) -> ()) -> ())?
 
-	public init(_ block: () -> (T)) {
-		addDependency(BlockOperation { input in
+	public typealias Reject = (NSError) -> ()
+	public typealias Fulfill = (T?) -> ()
+
+	var promise: ((Fulfill, Reject) -> Void)?
 			return block()
 		})
 	}
