@@ -10,12 +10,12 @@ class CatchTest : XCTestCase {
 		let p = Promise {
 			return "one"
 		}
-		.then { value -> (String, NSError?) in
+		.then { value -> (String, Error?) in
 			return (value, self._createError())
 		}
 
 		p.done { value, error in
-			e = error
+			e = error as? NSError
 			XCTAssertNil(value)
 			expectation.fulfill()
 		}
@@ -35,7 +35,7 @@ class CatchTest : XCTestCase {
 		})
 
 		p.done { value, error in
-			e = error
+			e = error as? NSError
 			expectation.fulfill()
 		}
 
@@ -61,7 +61,7 @@ class CatchTest : XCTestCase {
 		}
 
 		p.done { value, error in
-			e = error
+			e = error as? NSError
 			expectation.fulfill()
 		}
 

@@ -33,7 +33,7 @@ class PromiseOperationTest : XCTestCase {
 		}
 
 		operation.catchError = {
-			error = $0
+			error = $0 as NSError
 			expectation.fulfill()
 		}
 
