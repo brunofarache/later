@@ -1,5 +1,7 @@
 osx_image: xcode8
 language: objective-c
-xcode_project: later.xcodeproj
-xcode_scheme: later
-xcode_sdk: iphonesimulator10
+
+
+script:
+   - set -o pipefail
+   - xcodebuild clean test -project later.xcodeproj -scheme later -destination "platform=iOS Simulator,name=iPhone 6 Plus" | xcpretty
