@@ -2,9 +2,9 @@ import Foundation
 
 class BlockTupleOperation : Operation {
 
-	var block: (Any?) -> (Any?, NSError?)
+	var block: (Any?) -> (Any?, Error?)
 
-	init(_ block: @escaping (Any?) -> (Any?, NSError?)) {
+	init(_ block: @escaping (Any?) -> (Any?, Error?)) {
 		self.block = block
 	}
 

@@ -1,6 +1,6 @@
 import Foundation
 
-public typealias PromiseClosure = (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void
+public typealias PromiseClosure = (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (Error) -> Void) -> Void
 
 public class Promise<T> {
 
@@ -26,7 +26,7 @@ public class Promise<T> {
 		self.operations = operations
 	}
 
-	public func done(block: ((T?, NSError?) -> ())? = nil) {
+	public func done(block: ((T?, Error?) -> ())? = nil) {
 		let queue = OperationQueue()
 
 		for operation in operations {
@@ -52,7 +52,7 @@ public class Promise<T> {
 		return Promise<U>(self.operations)
 	}
 
-	public func then<U: Any>(block: @escaping (T) -> (U, NSError?)) -> Promise<U> {
+	public func then<U: Any>(block: @escaping (T) -> (U, Error?)) -> Promise<U> {
 		addDependency(operation: BlockTupleOperation { input in
 			let output = block(input as! T)
 			return (output.0, output.1)
@@ -78,8 +78,8 @@ public class Promise<T> {
 	}
 
 	func getCatchError(
-			queue: OperationQueue, block: ((T?, NSError?) -> ())?)
-		-> ((NSError) -> ()) {
+			queue: OperationQueue, block: ((T?, Error?) -> ())?)
+		-> ((Error) -> ()) {
 
 		return { error in
 			queue.cancelAllOperations()

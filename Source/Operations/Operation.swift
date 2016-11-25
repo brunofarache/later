@@ -2,7 +2,7 @@ import Foundation
 
 class Operation : Foundation.Operation {
 
-	var catchError: ((NSError) -> ())?
+	var catchError: ((Error) -> ())?
 	var output: Any?
 
 }
