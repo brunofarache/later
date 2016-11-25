@@ -6,7 +6,7 @@ public class Promise<T> {
 
 	var operations = [Operation]()
 
-	var promise: ((_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void)?
+	var promise: (PromiseClosure)?
 
 	public init(_ block: @escaping () -> (T)) {
 		addDependency(operation: BlockOperation { input in
@@ -14,7 +14,7 @@ public class Promise<T> {
 		})
 	}
 
-	public init(promise: @escaping (_ fulfill: @escaping (T) -> Void, _ reject: @escaping (NSError) -> Void) -> Void) {
+	public init(promise: @escaping PromiseClosure ) {
 		self.promise = {  fulfill, reject in
 			promise({ fulfill($0) }, reject)
 		}

@@ -3,13 +3,13 @@ import Foundation
 class PromiseOperation : Operation {
 
 	var block: ((Any?) -> PromiseClosure)?
-	var promise: ((_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void)?
+	var promise: (PromiseClosure)?
 
-	init(promise: @escaping (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void) {
+	init(promise: @escaping PromiseClosure) {
 		self.promise = promise
 	}
 
-	init(block: @escaping (Any?) -> (PromiseClosure)) {
+	init(block: @escaping (Any?) -> PromiseClosure) {
 		self.block = block
 	}
 
