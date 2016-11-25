@@ -1,13 +1,15 @@
 import Foundation
 
+public typealias PromiseClosure = (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void
+
 public class Promise<T> {
 
 	var operations = [Operation]()
 
 	public typealias Reject = (NSError) -> ()
-	public typealias Fulfill = (T?) -> ()
+	public typealias Fulfill = (Any?) -> ()
 
-	var promise: ((Fulfill, Reject) -> Void)?
+	var promise: ((_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void)?
 
 	public init(_ block: @escaping () -> (T)) {
 		addDependency(operation: BlockOperation { input in
@@ -15,7 +17,7 @@ public class Promise<T> {
 		})
 	}
 
-	public init(promise: @escaping (Fulfill, Reject) -> Void) {
+	public init(promise: @escaping (_ fulfill: @escaping (T) -> Void, _ reject: @escaping (NSError) -> Void) -> Void) {
 		self.promise = {  fulfill, reject in
 			promise({ fulfill($0) }, reject)
 		}

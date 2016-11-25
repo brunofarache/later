@@ -2,14 +2,14 @@ import Foundation
 
 class PromiseOperation : Operation {
 
-	var block: ((Any?) -> (((Any?) -> (), (NSError) -> ()) -> ()))?
-	var promise: (((Any?) -> (), (NSError) -> ()) -> ())?
+	var block: ((Any?) -> PromiseClosure)?
+	var promise: ((_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void)?
 
-	init(promise: @escaping (((Any?) -> (), (NSError) -> ()) -> ())) {
+	init(promise: @escaping (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void) {
 		self.promise = promise
 	}
 
-	init(block: @escaping (Any?) -> (((Any?) -> (), (NSError) -> ()) -> ())) {
+	init(block: @escaping (Any?) -> (PromiseClosure)) {
 		self.block = block
 	}
 
