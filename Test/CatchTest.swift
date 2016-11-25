@@ -50,10 +50,10 @@ class CatchTest : XCTestCase {
 		var e: NSError?
 
 		let p = Promise<()>(promise: { fulfill, reject in
-
+			DispatchQueue.global().async {
 				sleep(1)
 				reject(self._createError())
-			
+			}
 		})
 		.then {
 			XCTFail(
