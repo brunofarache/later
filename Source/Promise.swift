@@ -6,9 +6,6 @@ public class Promise<T> {
 
 	var operations = [Operation]()
 
-	public typealias Reject = (NSError) -> ()
-	public typealias Fulfill = (Any?) -> ()
-
 	var promise: ((_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (NSError) -> Void) -> Void)?
 
 	public init(_ block: @escaping () -> (T)) {
