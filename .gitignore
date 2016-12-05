@@ -1,5 +1,7 @@
 Pods/
 xcuserdata/
 
+.DS_Store
+
 *.xccheckout
 *.xcworkspace
