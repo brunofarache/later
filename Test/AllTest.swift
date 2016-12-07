@@ -5,13 +5,13 @@ class AllTest : XCTestCase {
 
 	func testAll() {
 		let expectation = expect(description: "testAll")
-		var output = [Any?]()
+		var output = [String?]()
 
 		let p = Promise {
 			return "one"
 		}
 		.all(
-			{ value in
+			{ value -> String in
 				XCTAssertEqual("one", value)
 				return "two"
 			},
@@ -29,8 +29,8 @@ class AllTest : XCTestCase {
 
 		wait {
 			XCTAssertEqual(2, output.count)
-			XCTAssertEqual("two", output.first! as? String)
-			XCTAssertEqual("three", output.last! as? String)
+			XCTAssertEqual("two", output.first!)
+			XCTAssertEqual("three", output.last!)
 		}
 	}
 

@@ -7,7 +7,7 @@ class PromiseOperationTest : XCTestCase {
 		let expectation = expect(description: "testFulfill")
 		let queue = OperationQueue()
 
-		let operation = PromiseOperation { fulfill, reject in
+		let operation = PromiseOperation<Void, String> { fulfill, reject in
 			fulfill("one")
 			expectation.fulfill()
 		}
@@ -19,7 +19,7 @@ class PromiseOperationTest : XCTestCase {
 		queue.addOperation(operation)
 
 		wait {
-			XCTAssertEqual("one", operation.output as? String)
+			XCTAssertEqual("one", operation.output)
 		}
 	}
 
@@ -28,7 +28,7 @@ class PromiseOperationTest : XCTestCase {
 		let queue = OperationQueue()
 		var error: NSError?
 
-		let operation = PromiseOperation { fulfill, reject in
+		let operation = PromiseOperation<Void, Void> { fulfill, reject in
 			reject(NSError(domain: "domain", code: 1, userInfo: nil))
 		}
 

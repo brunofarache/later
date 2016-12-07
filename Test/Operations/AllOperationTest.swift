@@ -7,7 +7,7 @@ class AllOperationTest : XCTestCase {
 		let expectation = expect(description: "testFirst_Long")
 		let queue = OperationQueue()
 
-		let operation = AllOperation([
+		let operation = AllOperation<Void, String>([
 			{ value in
 				sleep(1)
 				expectation.fulfill()
@@ -21,10 +21,10 @@ class AllOperationTest : XCTestCase {
 		queue.addOperation(operation)
 
 		wait(timeout: 2) {
-			let output = operation.output as! [Any?]
+			let output = operation.output as! [String]
 			XCTAssertEqual(2, output.count)
-			XCTAssertEqual("one", output.first! as? String)
-			XCTAssertEqual("two", output.last! as? String)
+			XCTAssertEqual("one", output.first!)
+			XCTAssertEqual("two", output.last!)
 		}
 	}
 
