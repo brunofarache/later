@@ -1,17 +1,17 @@
 extension Promise {
 
-	 public func all(_ block: (T) -> (Any?)...) -> Promise<[Any?]> {
-		var blocks: [(Any?) -> Any?] = []
+	 public func all<U>(_ block: (T) -> (U?)...) -> Promise<[U?]> {
+		var blocks: [(T?) -> U?] = []
 
 		for b in block {
 			blocks.append({ input in
-				return b(input as! T)
+				return b(input!)
 			})
 		}
 
 		addDependency(operation: AllOperation(blocks))
 
-		return Promise<[Any?]>(self.operations)
+		return Promise<[U?]>(self.operations)
 	}
 
 }

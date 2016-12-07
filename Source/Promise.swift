@@ -1,25 +1,25 @@
 import Foundation
 
-public typealias PromiseClosure = (_ fulfill: @escaping (Any) -> Void, _ reject: @escaping (Error) -> Void) -> Void
+public typealias PromiseClosure<T> = (_ fulfill: @escaping (T) -> Void, _ reject: @escaping (Error) -> Void) -> Void
 
 public class Promise<T> {
 
 	var operations = [Operation]()
 
-	var promise: (PromiseClosure)?
+	var promise: (PromiseClosure<T>)?
 
 	public init(_ block: @escaping () -> (T)) {
-		addDependency(operation: BlockOperation { input in
+		addDependency(operation: BlockOperation<(), T> { input in
 			return block()
 		})
 	}
 
-	public init(promise: @escaping PromiseClosure ) {
+	public init(promise: @escaping PromiseClosure<T> ) {
 		self.promise = {  fulfill, reject in
 			promise({ fulfill($0) }, reject)
 		}
 
-		addDependency(operation: PromiseOperation(promise: self.promise!))
+		addDependency(operation: PromiseOperation<(), T>(promise: self.promise!))
 	}
 
 	init(_ operations: [Operation]) {
@@ -36,7 +36,7 @@ public class Promise<T> {
 		if let done = block {
 			addDependency(operation: BlockOperation({ input in
 				DispatchQueue.main.async {
-					done(input as! T?, nil)
+					done(input, nil)
 				}
 			}))
 		}
@@ -44,26 +44,26 @@ public class Promise<T> {
 		queue.addOperations(operations, waitUntilFinished: false)
 	}
 
-	public func then<U: Any>(block: @escaping (T) -> (U)) -> Promise<U> {
+	public func then<U>(block: @escaping (T) -> (U)) -> Promise<U> {
 		addDependency(operation: BlockOperation { input in
-			return block(input as! T) as U
+			return block(input!)
 		})
 
 		return Promise<U>(self.operations)
 	}
 
-	public func then<U: Any>(block: @escaping (T) -> (U, Error?)) -> Promise<U> {
-		addDependency(operation: BlockTupleOperation { input in
-			let output = block(input as! T)
+	public func then<U>(block: @escaping (T) -> (U, Error?)) -> Promise<U> {
+		addDependency(operation: BlockTupleOperation<T,U> { input in
+			let output = block(input!)
 			return (output.0, output.1)
 		})
 
 		return Promise<U>(self.operations)
 	}
 
-	public func then<U: Any>(block: @escaping (T) -> (Promise<U>)) -> Promise<U> {
+	public func then<U>(block: @escaping (T) -> (Promise<U>)) -> Promise<U> {
 		addDependency(operation: PromiseOperation(block: { input in
-			return block(input as! T).promise!
+			return block(input!).promise!
 		}))
 
 		return Promise<U>(self.operations)
