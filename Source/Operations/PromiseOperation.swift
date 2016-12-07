@@ -1,15 +1,15 @@
 import Foundation
 
-class PromiseOperation : Operation {
+class PromiseOperation<T,U> : OperationWithOutput<U> {
 
-	var block: ((Any?) -> PromiseClosure)?
-	var promise: (PromiseClosure)?
+	var block: ((T?) -> PromiseClosure<U>)?
+	var promise: (PromiseClosure<U>)?
 
-	init(promise: @escaping PromiseClosure) {
+	init(promise: @escaping PromiseClosure<U>) {
 		self.promise = promise
 	}
 
-	init(block: @escaping (Any?) -> PromiseClosure) {
+	init(block: @escaping (T?) -> PromiseClosure<U>) {
 		self.block = block
 	}
 
@@ -17,7 +17,7 @@ class PromiseOperation : Operation {
 		let group = DispatchGroup()
 		group.enter()
 
-		if let b = block, let op = dependencies.last as? Operation {
+		if let b = block, let op = dependencies.last as? OperationWithOutput<T> {
 			promise = b(op.output)
 		}
 

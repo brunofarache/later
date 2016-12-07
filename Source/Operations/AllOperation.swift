@@ -1,16 +1,16 @@
 import Foundation
 
-class AllOperation : Operation {
+class AllOperation<T, U> : OperationWithOutput<[U?]> {
 
-	var blocks: [(Any?) -> (Any?)]
+	var blocks: [(T?) -> (U?)]
 
-	init(_ block: [(Any?) -> (Any?)]) {
+	init(_ block: [(T?) -> (U?)]) {
 		self.blocks = block
 	}
 
 	override func main() {
-		var results = [Any?](repeating: nil, count: self.blocks.count)
-		let operation = dependencies.last as? Operation
+		var results = [U?](repeating: nil, count: self.blocks.count)
+		let operation = dependencies.last as? OperationWithOutput<T>
 
 		let group = DispatchGroup()
 		let queue = DispatchQueue.global()

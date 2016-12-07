@@ -1,15 +1,15 @@
 import Foundation
 
-class BlockOperation : Operation {
+class BlockOperation<T,U> : OperationWithOutput<U> {
 
-	var block: ((Any?) -> (Any?))
+	var block: ((T?) -> (U?))
 
-	init(_ block: @escaping (Any?) -> (Any?)) {
+	init(_ block: @escaping (T?) -> (U?)) {
 		self.block = block
 	}
 
 	override func main() {
-		let operation = dependencies.last as? Operation
+		let operation = dependencies.last as? OperationWithOutput<T>
 		output = block(operation?.output)
 	}
 
