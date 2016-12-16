@@ -1,7 +1,7 @@
-osx_image: xcode8
+osx_image: xcode8.2
 language: objective-c
 
 
 script:
    - set -o pipefail
-   - xcodebuild clean test -project later.xcodeproj -scheme later -destination "platform=iOS Simulator,name=iPhone 6 Plus" | xcpretty
+   - xcodebuild clean test -project later.xcodeproj -scheme later -destination "platform=iOS Simulator,name=iPhone 7 Plus,OS=10.2" | xcpretty
