@@ -15,9 +15,7 @@ public class Promise<T> {
 	}
 
 	public init(promise: @escaping PromiseClosure<T> ) {
-		self.promise = {  fulfill, reject in
-			promise({ fulfill($0) }, reject)
-		}
+		self.promise = promise
 
 		addDependency(operation: PromiseOperation<(), T>(promise: self.promise!))
 	}
@@ -62,8 +60,8 @@ public class Promise<T> {
 	}
 
 	public func then<U>(block: @escaping (T) -> (Promise<U>)) -> Promise<U> {
-		addDependency(operation: PromiseOperation(block: { input in
-			return block(input!).promise!
+		addDependency(operation: PromiseOperation(concatPromise: { input in
+			block(input!)
 		}))
 
 		return Promise<U>(self.operations)
