@@ -215,4 +215,28 @@ class ThenTest : XCTestCase {
 		}
 	}
 
+	func testPromise_With_More_Operations() {
+		let expectation = expect(description: "test then with promise")
+
+		let promiseWithOperation = Promise {
+			return "one"
+		}
+		.then { _ in
+			return "two"
+		}
+
+		Promise {
+			return "three"
+		}
+		.then { _ in
+			return promiseWithOperation
+		}
+		.done { result, _ in
+			XCTAssertEqual(result, "two")
+			expectation.fulfill()
+		}
+
+		waitForExpectations(timeout: 10, handler: nil)
+	}
+
 }
